@@ -17,7 +17,7 @@
  */
 package com.hayanige.chess;
 
-public class PieceType {
+final class PieceType {
 
   static final int MASK = 0x7;
 
