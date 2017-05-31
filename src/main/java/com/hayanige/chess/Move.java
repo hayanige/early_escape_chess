@@ -61,4 +61,53 @@ public class Move {
 
   private Move() {
   }
+
+  static int valueOf(int type, int originSquare, int targetSquare,
+      int originPiece, int targetPiece, int promotion) {
+    int move = 0;
+
+    // Encode type
+    move |= type << TYPE_SHIFT;
+
+    // Encode origin square
+    move |= originSquare << ORIGIN_SQUARE_SHIFT;
+
+    // Encode target square
+    move |= targetSquare << TARGET_SQUARE_SHIFT;
+
+    // Encode origin piece
+    move |= originPiece << ORIGIN_PIECE_SHIFT;
+
+    // Encode target piece
+    move |= targetPiece << TARGET_PIECE_SHIFT;
+
+    // Encode promotion
+    move |= promotion << PROMOTION_SHIFT;
+
+    return move;
+  }
+
+  static int getType(int move) {
+    return (move & TYPE_MASK) >>> TYPE_SHIFT;
+  }
+
+  static int getOriginSquare(int move) {
+    return (move & ORIGIN_SQUARE_MASK) >>> ORIGIN_SQUARE_SHIFT;
+  }
+
+  static int getTargetSquare(int move) {
+    return (move & TARGET_SQUARE_MASK) >>> TARGET_SQUARE_SHIFT;
+  }
+
+  static int getOriginPiece(int move) {
+    return (move & ORIGIN_PIECE_MASK) >>> ORIGIN_PIECE_SHIFT;
+  }
+
+  static int getTargetPiece(int move) {
+    return (move & TARGET_PIECE_MASK) >>> TARGET_PIECE_SHIFT;
+  }
+
+  static int getPromotion(int move) {
+    return (move & PROMOTION_MASK) >>> PROMOTION_SHIFT;
+  }
 }
