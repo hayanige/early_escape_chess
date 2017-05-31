@@ -33,7 +33,7 @@ import static com.hayanige.chess.Square.NOSQUARE;
  * 22 - 26 : target piece (optional)
  * 27 - 29 : promotion type (optional)
  */
-public class Move {
+final class Move {
 
   // These are our bit masks
   private static final int TYPE_SHIFT = 0;
