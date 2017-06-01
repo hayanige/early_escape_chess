@@ -62,8 +62,8 @@ import static com.hayanige.chess.Square.pawnDirections;
 import static com.hayanige.chess.Square.rookDirections;
 import static java.lang.Math.max;
 
-import com.sun.istack.internal.NotNull;
 import java.security.SecureRandom;
+import org.jetbrains.annotations.NotNull;
 
 final class Position {
 

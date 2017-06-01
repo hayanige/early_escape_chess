@@ -65,7 +65,8 @@ import static com.hayanige.chess.Square.queenDirections;
 import static com.hayanige.chess.Square.rookDirections;
 
 import com.hayanige.chess.MoveList.MoveEntry;
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
+
 
 final class MoveGenerator {
 
