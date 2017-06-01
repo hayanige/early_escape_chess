@@ -20,7 +20,6 @@
       <groupId>com.fluxchess</groupId>
       <artifactId>jcpi</artifactId>
       <version>1.4.1</version>
-      <systemPath></systemPath>
     </dependency>
 
     <dependency>
