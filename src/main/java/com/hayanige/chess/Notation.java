@@ -37,6 +37,11 @@ import static com.hayanige.chess.File.e;
 import static com.hayanige.chess.File.f;
 import static com.hayanige.chess.File.g;
 import static com.hayanige.chess.File.h;
+import static com.hayanige.chess.MoveType.CASTLING;
+import static com.hayanige.chess.MoveType.ENPASSANT;
+import static com.hayanige.chess.MoveType.NORMAL;
+import static com.hayanige.chess.MoveType.PAWNDOUBLE;
+import static com.hayanige.chess.MoveType.PAWNPROMOTION;
 import static com.hayanige.chess.Piece.BLACK_BISHOP;
 import static com.hayanige.chess.Piece.BLACK_KING;
 import static com.hayanige.chess.Piece.BLACK_KNIGHT;
@@ -73,6 +78,7 @@ import com.fluxchess.jcpi.models.GenericCastling;
 import com.fluxchess.jcpi.models.GenericChessman;
 import com.fluxchess.jcpi.models.GenericColor;
 import com.fluxchess.jcpi.models.GenericFile;
+import com.fluxchess.jcpi.models.GenericMove;
 import com.fluxchess.jcpi.models.GenericPiece;
 import com.fluxchess.jcpi.models.GenericPosition;
 import com.fluxchess.jcpi.models.GenericRank;
@@ -406,5 +412,30 @@ final class Notation {
   static GenericPosition fromSquare(int square) {
     return GenericPosition.valueOf(fromFile(Square.getFile(square)),
         fromRank(Square.getRank(square)));
+  }
+
+  static GenericMove fromMove(int move) {
+    int type = Move.getType(move);
+    int originSquare = Move.getOriginSquare(move);
+    int targetSquare = Move.getTargetSquare(move);
+
+    switch (type) {
+      case NORMAL:
+      case PAWNDOUBLE:
+      case ENPASSANT:
+      case CASTLING:
+        return new GenericMove(
+            Notation.fromSquare(originSquare),
+            Notation.fromSquare(targetSquare)
+        );
+      case PAWNPROMOTION:
+        return new GenericMove(
+            Notation.fromSquare(originSquare),
+            Notation.fromSquare(targetSquare),
+            Notation.fromPieceType(Move.getPromotion(move))
+        );
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 }
