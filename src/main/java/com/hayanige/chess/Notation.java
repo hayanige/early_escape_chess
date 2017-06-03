@@ -182,7 +182,7 @@ final class Notation {
     genericBoard.setHalfMoveClock(position.halfmoveClock);
 
     // Set full move number
-    genericBoard.setFullMoveNumber(position.getFullmovenumber());
+    genericBoard.setFullMoveNumber(position.getFullmoveNumber());
 
     return genericBoard;
   }

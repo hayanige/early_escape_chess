@@ -189,7 +189,7 @@ final class Position {
     this.halfmoveClock = halfmoveClock;
   }
 
-  int getFullmovenumber() {
+  int getFullmoveNumber() {
     return halfmoveNumber / 2;
   }
 
