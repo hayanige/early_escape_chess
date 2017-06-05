@@ -50,8 +50,12 @@ import java.io.BufferedReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 final class EarlyEscape extends AbstractEngine implements Protocol {
+
+  final private Logger logger = LoggerFactory.getLogger(EarlyEscape.class);
 
   private Search search = new Search(this);
   private long startTime = 0;
@@ -238,6 +242,7 @@ final class EarlyEscape extends AbstractEngine implements Protocol {
       }
 
       getProtocol().send(command);
+      loggingSendInfo(command);
 
       statusStartTime = currentTimeMillis();
     }
@@ -267,7 +272,80 @@ final class EarlyEscape extends AbstractEngine implements Protocol {
     command.setMoveList(moveList);
 
     getProtocol().send(command);
+    loggingSendInfo(command);
 
     statusStartTime = currentTimeMillis();
+  }
+
+  public void loggingSendInfo(ProtocolInformationCommand command) {
+    String infoCommand = "info";
+
+    if (command.getPvNumber() != null) {
+      infoCommand += " multipv " + command.getPvNumber().toString();
+    }
+    if (command.getDepth() != null) {
+      infoCommand += " depth " + command.getDepth().toString();
+
+      if (command.getMaxDepth() != null) {
+        infoCommand += " seldepth " + command.getMaxDepth().toString();
+      }
+    }
+    if (command.getMate() != null) {
+      infoCommand += " score mate " + command.getMate().toString();
+    } else if (command.getCentipawns() != null) {
+      infoCommand += " score cp " + command.getCentipawns().toString();
+    }
+    if (command.getValue() != null) {
+      switch (command.getValue()) {
+        case EXACT:
+          break;
+        case ALPHA:
+          infoCommand += " upperbound";
+          break;
+        case BETA:
+          infoCommand += " lowerbound";
+          break;
+        default:
+          assert false : command.getValue();
+      }
+    }
+    if (command.getMoveList() != null) {
+      infoCommand += " pv";
+      for (GenericMove move : command.getMoveList()) {
+        infoCommand += " ";
+        infoCommand += move.toString();
+      }
+    }
+    if (command.getRefutationList() != null) {
+      infoCommand += " refutation";
+      for (GenericMove move : command.getRefutationList()) {
+        infoCommand += " ";
+        infoCommand += move.toString();
+      }
+    }
+    if (command.getCurrentMove() != null) {
+      infoCommand += " currmove " + command.getCurrentMove().toString();
+    }
+    if (command.getCurrentMoveNumber() != null) {
+      infoCommand +=
+          " currmovenumber " + command.getCurrentMoveNumber().toString();
+    }
+    if (command.getHash() != null) {
+      infoCommand += " hashfull " + command.getHash().toString();
+    }
+    if (command.getNps() != null) {
+      infoCommand += " nps " + command.getNps().toString();
+    }
+    if (command.getTime() != null) {
+      infoCommand += " time " + command.getTime().toString();
+    }
+    if (command.getNodes() != null) {
+      infoCommand += " nodes " + command.getNodes().toString();
+    }
+    if (command.getString() != null) {
+      infoCommand += " string " + command.getString();
+    }
+
+    logger.info(infoCommand);
   }
 }
