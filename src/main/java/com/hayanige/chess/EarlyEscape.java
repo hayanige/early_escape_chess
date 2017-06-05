@@ -20,6 +20,7 @@ package com.hayanige.chess;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.hayanige.chess.Move.NOMOVE;
 import static com.hayanige.chess.Notation.fromMove;
+import static com.hayanige.chess.Notation.fromPosition;
 import static com.hayanige.chess.Value.CHECKMATE;
 import static com.hayanige.chess.Value.CHECKMATE_THRESHOLD;
 import static java.lang.Integer.signum;
@@ -135,6 +136,8 @@ final class EarlyEscape extends AbstractEngine implements Protocol {
         throw new IllegalArgumentException();
       }
     }
+
+    logger.debug(fromPosition(currentPosition));
   }
 
   public void receive(EngineStartCalculatingCommand command) {
@@ -346,6 +349,6 @@ final class EarlyEscape extends AbstractEngine implements Protocol {
       infoCommand += " string " + command.getString();
     }
 
-    logger.info(infoCommand);
+    logger.debug(infoCommand);
   }
 }
