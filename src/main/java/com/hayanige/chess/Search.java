@@ -24,6 +24,7 @@ import static com.hayanige.chess.Color.opposite;
 import static com.hayanige.chess.Depth.MAX_DEPTH;
 import static com.hayanige.chess.Depth.MAX_PLY;
 import static com.hayanige.chess.Move.NOMOVE;
+import static com.hayanige.chess.Notation.fromPosition;
 import static com.hayanige.chess.Value.CHECKMATE;
 import static com.hayanige.chess.Value.DRAW;
 import static com.hayanige.chess.Value.INFINITE;
@@ -37,12 +38,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class implements our search in a separate thread to keep the main thread
  * available for more commands.
  */
 final class Search implements Runnable {
+
+  final private Logger logger = LoggerFactory.getLogger(Search.class);
 
   private final Thread thread = new Thread(this);
   private final Semaphore wakeupSignal = new Semaphore(0);
@@ -418,6 +423,10 @@ final class Search implements Runnable {
           currentMove, currentMoveNumber);
       position.makeMove(move);
       int value = -search(depth - 1, -beta, -alpha, ply + 1);
+      if (depth >= 6) {
+        logger.debug("Check searchRoot Result: depth=" + depth + ", fen="
+            + fromPosition(position) + ", value=" + value);
+      }
       position.undoMove(move);
 
       if (abort) {
