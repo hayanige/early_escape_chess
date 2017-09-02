@@ -24,23 +24,21 @@ import com.fluxchess.jcpi.models.GenericMove;
 import com.fluxchess.jcpi.models.IllegalNotationException;
 import com.fluxchess.jcpi.protocols.ParseException;
 import com.hayanige.chess.MoveList.MoveEntry;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 public class PositionConverter {
 
   public static void main(String[] args) throws Exception {
-    FileReader fr = new FileReader(args[0]);
-    BufferedReader br = new BufferedReader(fr);
-
+    Scanner scanner = new Scanner(System.in);
     String line;
     String[] tokens;
     Position position;
-    while ((line = br.readLine()) != null) {
+    while (scanner.hasNext()) {
+      line = scanner.nextLine();
       tokens = line.trim().split("\\s", 2);
       position = parsePositionCommand(tokens);
 
