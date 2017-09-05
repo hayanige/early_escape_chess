@@ -29,13 +29,6 @@ public class InfoConverter {
         if (token.equals("cp")) {
           System.out.println(iter.next());
           break;
-        } else if (token.equals("mate")) {
-          if (Integer.parseInt(iter.next()) > 0) {
-            System.out.println(10000);
-          } else {
-            System.out.println(-10000);
-          }
-          break;
         }
       }
     }
