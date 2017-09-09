@@ -6,7 +6,6 @@
  */
 package com.hayanige.chess;
 
-import static com.hayanige.chess.Color.WHITE;
 import static com.hayanige.chess.Square.a1;
 import static com.hayanige.chess.Square.a2;
 import static com.hayanige.chess.Square.a3;
@@ -72,8 +71,6 @@ import static com.hayanige.chess.Square.h6;
 import static com.hayanige.chess.Square.h7;
 import static com.hayanige.chess.Square.h8;
 
-import java.util.Arrays;
-import java.util.List;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
 import org.jetbrains.annotations.NotNull;
@@ -99,7 +96,7 @@ final class NeuralEvaluation {
    */
   int evaluate(@NotNull Position position) {
 
-    double[] positionFeatures = new double[66];
+    double[] positionFeatures = new double[65];
 
     // add board features
     positionFeatures[0] =  position.board[a1];
@@ -170,17 +167,10 @@ final class NeuralEvaluation {
     // add active color feature
     positionFeatures[64] = position.activeColor;
 
-    // add full move number feature
-    positionFeatures[65] = position.getFullmoveNumber();
-
     INDArray posArray = Nd4j.create(positionFeatures);
 
     int value = (int) model.output(posArray, false).getDouble(0);
 
-    if (position.activeColor == WHITE) {
-      return value;
-    } else {
-      return -value;
-    }
+    return value;
   }
 }
