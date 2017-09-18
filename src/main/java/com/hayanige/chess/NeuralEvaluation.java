@@ -77,7 +77,7 @@ import org.jetbrains.annotations.NotNull;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 
-final class NeuralEvaluation {
+final class NeuralEvaluation extends Evaluation {
 
   MultiLayerNetwork model = null;
 

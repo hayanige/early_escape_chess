@@ -48,7 +48,7 @@ final class Search implements Runnable {
   private boolean shutdown = false;
 
   private Position position;
-  private final Evaluation evaluation = new Evaluation();
+  private final Evaluation evaluation = new PulseEvaluation();
 
   // We will store a MoveGenerator for each ply so we don't have to creat them
   // in search. (which is expensive)
