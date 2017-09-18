@@ -6,6 +6,7 @@
  */
 package com.hayanige.chess;
 
+import static com.hayanige.chess.Color.BLACK;
 import static com.hayanige.chess.Square.a1;
 import static com.hayanige.chess.Square.a2;
 import static com.hayanige.chess.Square.a3;
@@ -170,6 +171,10 @@ final class NeuralEvaluation extends Evaluation {
     INDArray posArray = Nd4j.create(positionFeatures);
 
     int value = (int) model.output(posArray, false).getDouble(0);
+
+    if (position.activeColor == BLACK) {
+      value = -value;
+    }
 
     return value;
   }

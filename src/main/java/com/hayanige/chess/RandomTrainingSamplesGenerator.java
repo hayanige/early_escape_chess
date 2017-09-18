@@ -6,6 +6,7 @@
  */
 package com.hayanige.chess;
 
+import static com.hayanige.chess.Color.BLACK;
 import static com.hayanige.chess.Square.a1;
 import static com.hayanige.chess.Square.a2;
 import static com.hayanige.chess.Square.a3;
@@ -204,6 +205,9 @@ public class RandomTrainingSamplesGenerator {
                 int score = Integer.parseInt(iter.next());
                 if (Math.abs(score) > Integer.parseInt(ignoreLargeScore)) {
                   break;
+                }
+                if (position.activeColor == BLACK) {
+                  score = -score;
                 }
                 String features = positionToFeatures(position);
                 System.out.println(features + "," + score);
