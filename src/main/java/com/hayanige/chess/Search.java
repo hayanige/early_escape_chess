@@ -48,7 +48,7 @@ final class Search implements Runnable {
   private boolean shutdown = false;
 
   private Position position;
-  private final Evaluation evaluation = new PulseEvaluation();
+  private Evaluation evaluation;
 
   // We will store a MoveGenerator for each ply so we don't have to creat them
   // in search. (which is expensive)
@@ -185,8 +185,9 @@ final class Search implements Runnable {
     this.doTimeManagement = true;
   }
 
-  Search(@NotNull Protocol protocol) {
+  Search(@NotNull Protocol protocol, Evaluation evaluation) {
     this.protocol = protocol;
+    this.evaluation = evaluation;
 
     for (int i = 0; i < MAX_PLY; ++i) {
       moveGenerators[i] = new MoveGenerator();

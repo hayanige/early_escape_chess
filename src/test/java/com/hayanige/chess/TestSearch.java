@@ -34,6 +34,7 @@ public class TestSearch {
     final int[] currentPonderMove = {NOMOVE};
 
     final Semaphore semaphore = new Semaphore(0);
+    final Evaluation evaluation = new PulseEvaluation();
 
     Search search = new Search(
         new Protocol() {
@@ -60,7 +61,7 @@ public class TestSearch {
           public void sendMove(RootEntry entry, int currentDepth,
               int currentMaxDepth, long totalNodes) {
           }
-        });
+        }, evaluation);
     search.newDepthSearch(Notation.toPosition("3K3r/8/3k4/8/8/8/8/8 w - - 0 1"),
         1);
     search.start();
@@ -78,6 +79,7 @@ public class TestSearch {
     final int[] mate = {NOVALUE};
 
     final Semaphore semaphore = new Semaphore(0);
+    final Evaluation evaluation = new PulseEvaluation();
 
     Search search = new Search(
         new Protocol() {
@@ -109,7 +111,7 @@ public class TestSearch {
               mate[0] = signum(entry.value) * (mateDepth + 1) / 2;
             }
           }
-        });
+        }, evaluation);
     search.newDepthSearch(
         Notation.toPosition("8/8/1R1P4/2B2p2/k1K2P2/4P3/8/8 w - - 3 101"), 2);
     search.start();
@@ -128,6 +130,7 @@ public class TestSearch {
     final int[] currentPonderMove = {NOMOVE};
 
     final Semaphore semaphore = new Semaphore(0);
+    final Evaluation evaluation = new PulseEvaluation();
 
     Search search = new Search(
         new Protocol() {
@@ -154,7 +157,7 @@ public class TestSearch {
           public void sendMove(RootEntry entry, int currentDepth,
               int currentMaxDepth, long totalNodes) {
           }
-        });
+        }, evaluation);
     search.newDepthSearch(Notation.toPosition("7k/5K2/6Q1/8/8/8/8/8 b - - 1 1"),
         1);
     search.start();
@@ -170,6 +173,7 @@ public class TestSearch {
     final int[] currentBestMove = {NOMOVE};
 
     final Semaphore semaphore = new Semaphore(0);
+    final Evaluation evaluation = new PulseEvaluation();
 
     Search search = new Search(
         new Protocol() {
@@ -195,7 +199,7 @@ public class TestSearch {
           public void sendMove(RootEntry entry, int currentDepth,
               int currentMaxDepth, long totalNodes) {
           }
-        });
+        }, evaluation);
     search.newClockSearch(Notation.toPosition("3K4/7r/3k4/8/8/8/8/8 b - - 0 1"),
         10000, 0, 10000, 0, 40);
     search.start();
@@ -211,6 +215,7 @@ public class TestSearch {
     final int[] currentBestMove = {NOMOVE};
 
     final Semaphore semaphore = new Semaphore(0);
+    final Evaluation evaluation = new PulseEvaluation();
 
     Search search = new Search(
         new Protocol() {
@@ -236,7 +241,7 @@ public class TestSearch {
           public void sendMove(RootEntry entry, int currentDepth,
               int currentMaxDepth, long totalNodes) {
           }
-        });
+        }, evaluation);
     search.newClockSearch(Notation.toPosition("K1k5/8/8/8/8/8/8/8 w - - 0 1"),
         10000, 0, 10000, 0, 40);
     search.start();

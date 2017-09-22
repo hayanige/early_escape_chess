@@ -34,11 +34,8 @@ import com.fluxchess.jcpi.commands.ProtocolReadyAnswerCommand;
 import com.fluxchess.jcpi.models.GenericBoard;
 import com.fluxchess.jcpi.models.GenericColor;
 import com.fluxchess.jcpi.models.GenericMove;
-import com.fluxchess.jcpi.protocols.IProtocolHandler;
 import com.hayanige.chess.MoveList.MoveEntry;
 import com.hayanige.chess.MoveList.RootEntry;
-import java.io.BufferedReader;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -48,22 +45,17 @@ final class EarlyEscape extends AbstractEngine implements Protocol {
 
   final private Logger logger = LoggerFactory.getLogger(EarlyEscape.class);
 
-  private Search search = new Search(this);
+  private Search search;
+  private String evalName;
   private long startTime = 0;
   private long statusStartTime = 0;
 
   private Position currentPosition = Notation.toPosition(
       new GenericBoard(GenericBoard.STANDARDSETUP));
 
-  public EarlyEscape() {
-  }
-
-  public EarlyEscape(BufferedReader input, PrintStream output) {
-    super(input, output);
-  }
-
-  public EarlyEscape(IProtocolHandler handler) {
-    super(handler);
+  public EarlyEscape(Evaluation evaluation) {
+    search = new Search(this, evaluation);
+    evalName = evaluation.getClass().getSimpleName();
   }
 
   protected void quit() {
@@ -75,7 +67,8 @@ final class EarlyEscape extends AbstractEngine implements Protocol {
 
     ProtocolInitializeAnswerCommand answerCommand
         = new ProtocolInitializeAnswerCommand(
-        "EarlyEscape 0.0.1", "hayanige"
+        "EarlyEscape 0.0.1 - " + evalName,
+        "hayanige"
     );
 
     getProtocol().send(answerCommand);
