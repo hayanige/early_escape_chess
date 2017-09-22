@@ -115,7 +115,7 @@ public class EvaluationTrainingSamplesGenerator {
       ignoreLargeScore = cli.getOptionValue("i");
     }
 
-    Evaluation evaluation = new SimpleEvaluation();
+    Evaluation evaluation = new MaterialEvaluation();
 
     MoveGenerator generator = new MoveGenerator();
 
