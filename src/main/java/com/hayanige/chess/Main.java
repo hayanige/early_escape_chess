@@ -49,7 +49,8 @@ public class Main {
     try {
       Evaluation evaluation;
       String neuralEval = NeuralEvaluation.class.getCanonicalName();
-      if (neuralEval.equals(evalFunc)) {
+      String neuralRandomEval = NeuralRandomEvaluation.class.getCanonicalName();
+      if (neuralEval.equals(evalFunc) || neuralRandomEval.equals(evalFunc)) {
         if (model == null) {
           throw new IllegalArgumentException(
               "Please set a model if you want to use NeuralEvaluation");
